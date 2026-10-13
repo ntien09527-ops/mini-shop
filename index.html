@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniMart - Siêu thị mini của bạn</title>
+<style>
+:root{--green:#198754;--dark:#12643f;--mint:#eaf7ef;--ink:#24332b;--muted:#6b7a70;--line:#e2e9e4;--white:#fff;--orange:#ff9f43}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#f7faf8;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+.wrap{width:min(1160px,92%);margin:auto}
+.topline{background:var(--dark);color:white;font-size:13px;padding:7px 0}
+.topline .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 3px 18px #173c2410}
+.nav{min-height:76px;display:flex;align-items:center;gap:25px;justify-content:space-between}
+.logo{font-size:27px;font-weight:900;color:var(--green);white-space:nowrap}.logo span{color:var(--orange)}
+nav{display:flex;gap:19px;align-items:center;flex-wrap:wrap}
+nav a{font-size:14px;font-weight:700;color:#3c4b41}nav a:hover{color:var(--green)}
+.cart-link{background:var(--green);color:white;padding:10px 15px;border-radius:10px;font-weight:bold;white-space:nowrap}
+.hero{background:linear-gradient(120deg,#e6f7e9,#f8fff8 62%,#fff1dc);padding:52px 0}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.kicker{color:var(--green);font-weight:800;letter-spacing:1.5px;font-size:13px;text-transform:uppercase}
+h1{font-size:clamp(34px,4.5vw,56px);line-height:1.12;margin:12px 0 18px;letter-spacing:-1.5px}
+.hero p{max-width:580px;color:#5c6b60;font-size:17px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;background:var(--green);color:#fff;border-radius:10px;padding:12px 18px;font-weight:800;transition:.2s}
+.btn:hover{background:var(--dark);transform:translateY(-1px)}.btn.secondary{background:#fff;color:var(--green);border:1px solid #c8e5d0}.btn.small{padding:8px 12px;font-size:13px}
+.hero-art{min-height:280px;border-radius:30px;background:#d6efdc;display:grid;place-items:center;position:relative;overflow:hidden}
+.hero-art .basket{font-size:130px;filter:drop-shadow(0 15px 10px #1d62331a)}
+.floating{position:absolute;background:#fff;border-radius:15px;padding:12px 16px;box-shadow:0 8px 30px #143e2015;font-weight:800}.float-one{top:25px;left:22px}.float-two{bottom:25px;right:22px}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:24px}
+.benefit{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;display:flex;gap:12px;align-items:center}.benefit b{display:block;font-size:14px}.benefit small{color:var(--muted)}
+section{padding:62px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:25px}
+.section-head h2{font-size:clamp(25px,3vw,34px);line-height:1.2}.section-head p{color:var(--muted);margin-top:6px}
+.pill{display:inline-block;background:var(--mint);color:var(--green);padding:5px 10px;border-radius:99px;font-size:12px;font-weight:800;margin-bottom:9px}
+.category-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:28px}
+.category{background:white;border:1px solid var(--line);border-radius:15px;padding:18px;text-align:center;cursor:pointer;transition:.2s}
+.category:hover,.category.active{border-color:var(--green);background:var(--mint);transform:translateY(-2px)}
+.category .emoji{font-size:32px;display:block;margin-bottom:6px}.category strong{font-size:14px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.tools input,.tools select,.field input,.field select{border:1px solid #d9e3dc;background:#fff;padding:11px 13px;border-radius:9px;outline:none;width:100%}
+.tools input{flex:1;min-width:210px}.tools select{width:auto;min-width:170px}
+.tools input:focus,.field input:focus,.field select:focus{border-color:var(--green);box-shadow:0 0 0 3px #19875416}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+.product{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.2s;display:flex;flex-direction:column}
+.product:hover{transform:translateY(-4px);box-shadow:0 12px 28px #1d462111}
+.product-visual{height:155px;display:grid;place-items:center;background:linear-gradient(140deg,#f0faf2,#e4f4e8);font-size:70px;position:relative}
+.tag{position:absolute;left:12px;top:12px;background:#fff4e5;color:#ad5d08;padding:4px 8px;border-radius:99px;font-size:11px;font-weight:800}
+.product-info{padding:15px;display:flex;flex-direction:column;flex:1}.product-category{color:var(--muted);font-size:12px}
+.product h3{font-size:15px;line-height:1.35;margin:5px 0 8px}.price-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:auto;margin-bottom:13px}
+.price{font-size:18px;font-weight:900;color:var(--green)}.old-price{font-size:12px;color:#99a39b;text-decoration:line-through}
+.product .btn{width:100%}
+.promo{background:linear-gradient(110deg,#176a43,#218b56);color:white;border-radius:24px;padding:30px 35px;display:flex;justify-content:space-between;gap:20px;align-items:center}
+.promo h2{font-size:clamp(24px,3vw,34px);line-height:1.2}.promo p{color:#d8f1df;margin-top:9px}.promo .btn{background:white;color:var(--dark);white-space:nowrap}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:23px}
+.panel h3{font-size:20px;margin-bottom:7px}.muted{color:var(--muted);font-size:14px}
+.cart-empty{padding:26px;text-align:center;color:var(--muted);background:#f8fbf9;border-radius:12px}
+.cart-list{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.cart-item{display:grid;grid-template-columns:58px 1fr auto;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px}
+.cart-emoji{width:58px;height:58px;display:grid;place-items:center;background:var(--mint);border-radius:12px;font-size:30px}
+.cart-item h4{font-size:14px}.cart-item small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:8px;margin-top:5px}.qty button{width:25px;height:25px;border-radius:7px;background:#edf5ef;color:var(--dark);font-weight:900}.qty span{min-width:14px;text-align:center;font-size:13px}
+.remove{background:none;color:#b64c4c;font-size:12px;margin-top:4px}
+.summary{background:#f7faf8;border-radius:12px;padding:16px;margin-top:18px}.sum-row{display:flex;justify-content:space-between;gap:12px;margin:7px 0;font-size:14px}.sum-row.total{border-top:1px solid #dce6de;padding-top:12px;margin-top:12px;font-size:18px;font-weight:900}
+.field{margin-top:13px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:5px}.field textarea{width:100%;min-height:85px;border:1px solid #d9e3dc;border-radius:9px;padding:11px 13px;font:inherit;resize:vertical}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.full{grid-column:1/-1}
+.notice{display:none;padding:11px 13px;border-radius:9px;margin-top:12px;font-size:14px}.notice.show{display:block}.notice.success{background:#e8f7ec;color:#176a43}.notice.error{background:#fff0ef;color:#a43232}
+.member-card{background:linear-gradient(140deg,#e7f7eb,#f7fff8);border:1px solid #d7ebdc;border-radius:16px;padding:20px;margin-top:15px}
+.member-card .big{font-size:27px;font-weight:900;color:var(--green)}
+footer{background:#183e2b;color:#e9f6ed;padding:38px 0 20px;margin-top:20px}
+.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:25px}.footer-grid h3{margin-bottom:9px}.footer-grid p,.footer-grid a{font-size:14px;color:#c5dbcb}.footer-grid a{display:block;margin:5px 0}
+.copyright{border-top:1px solid #ffffff24;margin-top:26px;padding-top:16px;text-align:center;color:#b8d1bf;font-size:12px}
+.toast{position:fixed;bottom:22px;right:22px;background:#173f2b;color:white;padding:13px 18px;border-radius:12px;box-shadow:0 10px 30px #0002;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:50}.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:900px){.nav{gap:12px;flex-wrap:wrap;padding:12px 0}nav{order:3;width:100%;justify-content:center;gap:14px}.hero-grid{grid-template-columns:1fr  .8fr}.products-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:680px){.topline .wrap{justify-content:center}.hero{padding:36px 0}.hero-grid,.two-col{grid-template-columns:1fr}.hero-art{min-height:220px}.hero-art .basket{font-size:100px}.benefits{grid-template-columns:1fr}.category-row{grid-template-columns:repeat(2,1fr)}.products-grid{grid-template-columns:repeat(2,1fr);gap:11px}.product-visual{height:125px;font-size:56px}.product-info{padding:11px}.section-head{align-items:start;flex-direction:column}.promo{align-items:flex-start;flex-direction:column;padding:25px}.footer-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.nav{justify-content:center}.logo{width:100%;text-align:center}nav{gap:10px}nav a{font-size:12px}.cart-link{padding:8px 12px}}
+@media(max-width:380px){.products-grid{grid-template-columns:1fr}.product-visual{height:160px}.cart-item{grid-template-columns:48px 1fr auto}.cart-emoji{width:48px;height:48px}}
+</style>
+</head>
+<body>
+<div class="topline"><div class="wrap"><span>🚚 Giao hàng nhanh trong khu vực</span><span>☎ Hỗ trợ khách hàng: 1900 1234</span></div></div>
+<header><div class="wrap nav">
+<a class="logo" href="#home">Mini<span>Mart</span> 🛒</a>
+<nav aria-label="Điều hướng chính">
+<a href="#home">Trang chủ</a><a href="#products">Sản phẩm</a><a href="#offers">Ưu đãi</a><a href="#cart">Giỏ hàng</a><a href="#member">Thành viên</a>
+</nav>
+<a class="cart-link" href="#cart">🛒 Giỏ hàng (<span id="cart-count">0</span>)</a>
+</div></header>
+<main>
+<section class="hero" id="home"><div class="wrap hero-grid">
+<div><div class="kicker">Tươi ngon mỗi ngày</div><h1>Mua sắm dễ dàng,<br>cuộc sống tiện lợi.</h1><p>Thực phẩm tươi, đồ uống và nhu yếu phẩm cho gia đình bạn — chọn món yêu thích và đặt hàng ngay tại MiniMart.</p><div class="actions"><a class="btn" href="#products">Khám phá sản phẩm →</a><a class="btn secondary" href="#offers">Xem ưu đãi</a></div>
+<div class="benefits"><div class="benefit"><span>🥬</span><div><b>Chất lượng</b><small>Chọn lọc mỗi ngày</small></div></div><div class="benefit"><span>🚚</span><div><b>Tiện lợi</b><small>Đặt hàng nhanh chóng</small></div></div><div class="benefit"><span>💚</span><div><b>Giá hợp lý</b><small>Nhiều ưu đãi hấp dẫn</small></div></div></div>
+</div><div class="hero-art"><span class="floating float-one">🌿 Tươi mỗi ngày</span><div class="basket">🛒</div><span class="floating float-two">⭐ Được yêu thích</span></div>
+</div></section>
+<section id="products"><div class="wrap">
+<div class="section-head"><div><span class="pill">Gian hàng MiniMart</span><h2>Sản phẩm nổi bật</h2><p>Chọn sản phẩm, thêm vào giỏ và đặt hàng ngay.</p></div><span class="muted" id="product-count">12 sản phẩm</span></div>
+<div class="category-row">
+<div class="category active" data-category="Tất cả"><span class="emoji">🛍️</span><strong>Tất cả</strong></div>
+<div class="category" data-category="Rau củ"><span class="emoji">🥦</span><strong>Rau củ</strong></div>
+<div class="category" data-category="Trái cây"><span class="emoji">🍎</span><strong>Trái cây</strong></div>
+<div class="category" data-category="Đồ uống"><span class="emoji">🥤</span><strong>Đồ uống</strong></div>
+</div>
+<div class="tools"><input id="search" type="search" placeholder="🔎 Tìm sản phẩm..." aria-label="Tìm sản phẩm"><select id="sort" aria-label="Sắp xếp sản phẩm"><option value="default">Sắp xếp mặc định</option><option value="low">Giá thấp đến cao</option><option value="high">Giá cao đến thấp</option><option value="name">Tên A–Z</option></select></div>
+<div class="products-grid" id="products-grid"></div><div class="notice" id="no-products">Không tìm thấy sản phẩm phù hợp.</div>
+</div></section>
+<section id="offers" style="padding-top:0"><div class="wrap"><div class="promo"><div><span class="pill" style="background:#ffffff20;color:white">Ưu đãi thành viên</span><h2>Tiết kiệm hơn trong<br>mỗi lần mua sắm!</h2><p>Đăng ký thành viên để nhận thông tin ưu đãi và chương trình khuyến mãi.</p></div><a class="btn" href="#member">Tham gia ngay →</a></div></div></section>
+<section id="cart"><div class="wrap"><div class="section-head"><div><span class="pill">Đơn hàng của bạn</span><h2>Giỏ hàng & thanh toán</h2><p>Kiểm tra số lượng và điền thông tin nhận hàng.</p></div></div>
+<div class="two-col"><div class="panel"><h3>🛒 Sản phẩm đã chọn</h3><p class="muted">Bạn có thể tăng, giảm số lượng hoặc xóa sản phẩm.</p><div id="cart-list" class="cart-list"></div><div id="cart-empty" class="cart-empty">Giỏ hàng đang trống. <a href="#products" style="color:var(--green);font-weight:bold">Mua sắm ngay →</a></div></div>
+<div class="panel"><h3>Thông tin nhận hàng</h3><p class="muted">Đây là bản demo học tập, không gửi đơn hàng thật.</p>
+<form id="checkout-form"><div class="form-grid">
+<div class="field"><label for="customer-name">Họ và tên *</label><input id="customer-name" required placeholder="Nguyễn Văn A"></div>
+<div class="field"><label for="customer-phone">Số điện thoại *</label><input id="customer-phone" required inputmode="numeric" maxlength="10" placeholder="10 chữ số"></div>
+<div class="field full"><label for="customer-address">Địa chỉ nhận hàng *</label><input id="customer-address" required placeholder="Số nhà, đường, phường/xã..."></div>
+<div class="field full"><label for="customer-note">Ghi chú</label><textarea id="customer-note" placeholder="Ghi chú cho người giao hàng (không bắt buộc)"></textarea></div>
+</div><div class="summary"><div class="sum-row"><span>Tạm tính</span><strong id="subtotal">0 ₫</strong></div><div class="sum-row"><span>Phí giao hàng</span><strong id="shipping">15.000 ₫</strong></div><div class="sum-row total"><span>Tổng cộng</span><strong id="total">0 ₫</strong></div></div>
+<button class="btn" type="submit" style="width:100%;margin-top:15px">Xác nhận đặt hàng</button><div class="notice" id="checkout-notice"></div></form></div></div>
+</div></section>
+<section id="member"><div class="wrap"><div class="section-head"><div><span class="pill">MiniMart Rewards</span><h2>Thành viên MiniMart</h2><p>Đăng ký hoặc đăng nhập thử để trải nghiệm giao diện thành viên.</p></div></div>
+<div class="two-col"><div class="panel"><h3>🎁 Quyền lợi thành viên</h3><p class="muted">Theo dõi ưu đãi và nhận thông tin chương trình mới.</p><div class="member-card"><div class="big">MINIMART</div><p>Thành viên thân thiết</p><p style="margin-top:8px">✓ Cập nhật khuyến mãi<br>✓ Ưu đãi theo chương trình<br>✓ Trải nghiệm mua sắm tiện lợi</p></div></div>
+<div class="panel"><h3 id="member-form-title">Đăng ký thành viên</h3><p class="muted">Thông tin chỉ dùng để minh họa trên trang, không được lưu lên máy chủ.</p>
+<form id="member-form"><div class="field"><label for="member-name">Họ và tên</label><input id="member-name" required placeholder="Tên của bạn"></div><div class="field"><label for="member-email">Email</label><input id="member-email" type="email" required placeholder="ban@email.com"></div><div class="field"><label for="member-password">Mật khẩu</label><input id="member-password" type="password" minlength="4" required placeholder="Tối thiểu 4 ký tự"></div><button class="btn" id="member-submit" type="submit" style="width:100%;margin-top:15px">Đăng ký</button></form>
+<p class="muted" style="margin-top:14px"><span id="member-switch-text">Đã có tài khoản?</span> <button id="member-switch" style="color:var(--green);background:none;font-weight:800">Đăng nhập</button></p><div class="notice" id="member-notice"></div><div id="member-welcome" class="member-card" style="display:none"></div>
+</div></div></div></section>
+</main>
+<footer><div class="wrap"><div class="footer-grid"><div><a class="logo" href="#home" style="color:white">Mini<span>Mart</span> 🛒</a><p style="margin-top:10px">Siêu thị mini thân thiện, tiện lợi cho mọi gia đình.</p></div><div><h3>Liên kết nhanh</h3><a href="#products">Sản phẩm</a><a href="#offers">Ưu đãi</a><a href="#cart">Giỏ hàng & thanh toán</a></div><div><h3>Liên hệ</h3><p>☎ 1900 1234</p><p>✉ hello@minimart.example</p><p>Giờ hoạt động: 7:00–22:00</p></div></div><div class="copyright">© 2026 MiniMart — Website demo phục vụ học tập môn Thiết kế Web.</div></div></footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const products = [
+{id:1,name:"Rau cải xanh",category:"Rau củ",price:18000,old:22000,emoji:"🥬",tag:"Tươi mới"},
+{id:2,name:"Cà rốt Đà Lạt",category:"Rau củ",price:22000,old:26000,emoji:"🥕",tag:"Bán chạy"},
+{id:3,name:"Cà chua đỏ",category:"Rau củ",price:25000,old:29000,emoji:"🍅",tag:"Giảm giá"},
+{id:4,name:"Khoai tây",category:"Rau củ",price:30000,old:0,emoji:"🥔",tag:""},
+{id:5,name:"Táo đỏ",category:"Trái cây",price:55000,old:65000,emoji:"🍎",tag:"Bán chạy"},
+{id:6,name:"Chuối chín",category:"Trái cây",price:28000,old:32000,emoji:"🍌",tag:""},
+{id:7,name:"Cam tươi",category:"Trái cây",price:42000,old:48000,emoji:"🍊",tag:"Tươi mới"},
+{id:8,name:"Nho tím",category:"Trái cây",price:79000,old:89000,emoji:"🍇",tag:""},
+{id:9,name:"Nước cam",category:"Đồ uống",price:25000,old:30000,emoji:"🧃",tag:"Giảm giá"},
+{id:10,name:"Sữa tươi",category:"Đồ uống",price:32000,old:0,emoji:"🥛",tag:""},
+{id:11,name:"Nước suối",category:"Đồ uống",price:8000,old:10000,emoji:"💧",tag:"Giá tốt"},
+{id:12,name:"Trà xanh",category:"Đồ uống",price:15000,old:18000,emoji:"🍵",tag:""}
+];
+let cart = [];
+let selectedCategory = "Tất cả";
+let memberMode = "register";
+let signedInName = "";
+const money = n => new Intl.NumberFormat("vi-VN").format(n) + " ₫";
+function toast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2400)}
+function renderProducts(){
+ let list=products.filter(p=>(selectedCategory==="Tất cả"||p.category===selectedCategory)&&p.name.toLowerCase().includes(document.getElementById("search").value.trim().toLowerCase()));
+ const sort=document.getElementById("sort").value;
+ if(sort==="low")list.sort((a,b)=>a.price-b.price); if(sort==="high")list.sort((a,b)=>b.price-a.price); if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name,"vi"));
+ document.getElementById("product-count").textContent=list.length+" sản phẩm";
+ document.getElementById("no-products").classList.toggle("show",list.length===0);
+ document.getElementById("products-grid").innerHTML=list.map(p=>`<article class="product"><div class="product-visual">${p.tag?`<span class="tag">${p.tag}</span>`:""}<span>${p.emoji}</span></div><div class="product-info"><span class="product-category">${p.category}</span><h3>${p.name}</h3><div class="price-row"><span class="price">${money(p.price)}</span>${p.old?`<span class="old-price">${money(p.old)}</span>`:""}</div><button class="btn small" onclick="addToCart(${p.id})">＋ Thêm vào giỏ</button></div></article>`).join("");
+}
+function addToCart(id){const found=cart.find(x=>x.id===id);if(found)found.qty++;else cart.push({id,qty:1});renderCart();toast("Đã thêm sản phẩm vào giỏ hàng!")}
+function changeQty(id,delta){const item=cart.find(x=>x.id===id);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);renderCart()}
+function removeItem(id){cart=cart.filter(x=>x.id!==id);renderCart();toast("Đã xóa sản phẩm khỏi giỏ")}
+function renderCart(){
+ const list=document.getElementById("cart-list"),empty=document.getElementById("cart-empty");
+ empty.style.display=cart.length?"none":"block";
+ list.innerHTML=cart.map(item=>{const p=products.find(x=>x.id===item.id);return `<div class="cart-item"><div class="cart-emoji">${p.emoji}</div><div><h4>${p.name}</h4><small>${money(p.price)} / sản phẩm</small><div class="qty"><button type="button" aria-label="Giảm số lượng" onclick="changeQty(${p.id},-1)">−</button><span>${item.qty}</span><button type="button" aria-label="Tăng số lượng" onclick="changeQty(${p.id},1)">＋</button></div><button class="remove" type="button" onclick="removeItem(${p.id})">Xóa</button></div><strong>${money(p.price*item.qty)}</strong></div>`}).join("");
+ const count=cart.reduce((sum,x)=>sum+x.qty,0),subtotal=cart.reduce((sum,x)=>sum+products.find(p=>p.id===x.id).price*x.qty,0),shipping=cart.length?15000:0;
+ document.getElementById("cart-count").textContent=count;document.getElementById("subtotal").textContent=money(subtotal);document.getElementById("shipping").textContent=money(shipping);document.getElementById("total").textContent=money(subtotal+shipping);
+}
+document.getElementById("search").addEventListener("input",renderProducts);document.getElementById("sort").addEventListener("change",renderProducts);
+document.querySelectorAll(".category").forEach(el=>el.addEventListener("click",()=>{selectedCategory=el.dataset.category;document.querySelectorAll(".category").forEach(c=>c.classList.toggle("active",c===el));renderProducts()}));
+document.getElementById("checkout-form").addEventListener("submit",e=>{
+ e.preventDefault();const notice=document.getElementById("checkout-notice");notice.className="notice show";
+ const phone=document.getElementById("customer-phone").value.trim();
+ if(!/^\d{10}$/.test(phone)){notice.classList.add("error");notice.textContent="Số điện thoại cần gồm đúng 10 chữ số.";return}
+ if(!cart.length){notice.classList.add("error");notice.textContent="Giỏ hàng đang trống. Vui lòng chọn sản phẩm trước khi đặt hàng.";return}
+ notice.classList.add("success");notice.textContent="Đặt hàng demo thành công! Cảm ơn "+document.getElementById("customer-name").value.trim()+". Đây chỉ là mô phỏng, chưa có đơn hàng thật.";
+ cart=[];renderCart();e.target.reset();
+});
+function setMemberMode(mode){memberMode=mode;document.getElementById("member-form-title").textContent=mode==="register"?"Đăng ký thành viên":"Đăng nhập thành viên";document.getElementById("member-submit").textContent=mode==="register"?"Đăng ký":"Đăng nhập";document.getElementById("member-switch-text").textContent=mode==="register"?"Đã có tài khoản?":"Chưa có tài khoản?";document.getElementById("member-switch").textContent=mode==="register"?"Đăng nhập":"Đăng ký";document.getElementById("member-name").parentElement.style.display=mode==="register"?"block":"none";document.getElementById("member-name").required=mode==="register";document.getElementById("member-notice").className="notice";document.getElementById("member-welcome").style.display="none"}
+document.getElementById("member-switch").addEventListener("click",()=>setMemberMode(memberMode==="register"?"login":"register"));
+document.getElementById("member-form").addEventListener("submit",e=>{e.preventDefault();const notice=document.getElementById("member-notice");notice.className="notice show success";signedInName=memberMode==="register"?document.getElementById("member-name").value.trim():(document.getElementById("member-email").value.split("@")[0]||"Thành viên");notice.textContent=memberMode==="register"?"Đăng ký demo thành công!":"Đăng nhập demo thành công!";const welcome=document.getElementById("member-welcome");welcome.style.display="block";welcome.innerHTML=`<strong>Xin chào, ${signedInName}!</strong><p>Bạn đang trải nghiệm tài khoản thành viên mô phỏng.</p><button class="btn small" type="button" id="logout" style="margin-top:10px">Đăng xuất</button>`;document.getElementById("logout").addEventListener("click",()=>{welcome.style.display="none";notice.className="notice";e.target.reset();toast("Bạn đã đăng xuất")})});
+renderProducts();renderCart();setMemberMode("register");
+</script>
+</body>
+</html>
